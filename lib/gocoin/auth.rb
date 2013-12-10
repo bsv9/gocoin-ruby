@@ -1,7 +1,6 @@
 module GoCoin
   class Auth
 
-    REQUIRED_PASSWORD_PARAMS = %w[grant_type client_id client_secret username password scope]
     REQUIRED_CODE_PARAMS = %w[grant_type client_id client_secret code redirect_uri]
 
     attr_reader :client
@@ -35,12 +34,10 @@ module GoCoin
     private
 
     def verify_required_params(options)
-      if options[:grant_type] == 'password'
-        required = REQUIRED_PASSWORD_PARAMS
-      elsif options[:grant_type] == 'authorization_code'
+      if options[:grant_type] == 'authorization_code'
         required = REQUIRED_CODE_PARAMS
       else
-        raise 'GoCoin::Auth#authenticate: grant_type was not defined properly'
+        raise 'GoCoin::Auth#authenticate: grant_type was not defined properly or is unsupported'
       end      
 
       @client.logger.debug "Required params: #{required}"

@@ -6,18 +6,7 @@ describe GoCoin::Auth do
 
 		it "should raise an error if an improper grant_type is specified" do
 			@gocoin_client = GoCoin::Client.new(grant_type: 'invalid_grant_type')
-			expect{@gocoin_client.auth.authenticate}.to raise_error 'GoCoin::Auth#authenticate: grant_type was not defined properly'
-		end
-
-		it "should raise an error if missing required properties for password grant_type" do
-			@gocoin_client = GoCoin::Client.new(
-				grant_type: 'password',
-				client_secret: 'somesecret',
-				username: 'admin@gocoin.com',
-				password: 'password123',
-				scope: 'user_read'
-			)
-			expect{@gocoin_client.auth.authenticate}.to raise_error "GoCoin::Auth#authenticate requires 'client_id' option."
+			expect{@gocoin_client.auth.authenticate}.to raise_error 'GoCoin::Auth#authenticate: grant_type was not defined properly or is unsupported'
 		end
 
 		it "should raise an error if missing required properties for authorization_code grant_type" do

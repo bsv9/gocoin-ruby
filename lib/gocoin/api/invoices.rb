@@ -22,7 +22,7 @@ module GoCoin
 			@api.request route, options
 		end
 
-		def search(params)
+		def search(params = {})
 			@api.client.logger.debug 'GoCoin::Invoices#search called.'
 			route = "/invoices/search?#{Util.hash_to_url_params(params)}"
 			options = {}

@@ -1,7 +1,7 @@
 module GoCoin
 	class Client
 
-		attr_reader :api, :auth, :user, :merchant, :apps, :headers, :options, :logger
+		attr_reader :api, :auth, :user, :merchant, :invoices, :apps, :headers, :options, :logger
 		attr_accessor :token
 
 		def initialize(options = {})
@@ -34,6 +34,7 @@ module GoCoin
 			@api = GoCoin::API.new(self)
 			@user = @api.user
 			@merchant = @api.merchant
+			@invoices = @api.invoices
 
 			@options[:secure] = false if @options[:secure] == 'false'
 		end

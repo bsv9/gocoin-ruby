@@ -53,6 +53,10 @@ describe GoCoin::Client do
 				@gocoin_client.merchant.class.to_s.should == 'GoCoin::Merchant'
 			end
 
+			it "should allow access to 'invoices'" do
+				@gocoin_client.invoices.class.to_s.should == 'GoCoin::Invoices'
+			end
+
 		end
 
 		describe "with a non-empty options hash" do
@@ -71,7 +75,6 @@ describe GoCoin::Client do
 					grant_type: 'a_different_grant_type',
 					request_id: 'a_request_id_string',
 					dash_url: 'a.different.dash.url',
-					log_file: 'log_file_name'
 				}
 				@gocoin_client = GoCoin::Client.new(@options)
 			end
@@ -82,7 +85,7 @@ describe GoCoin::Client do
 
 			it "should set the options with the provided values" do
 				@gocoin_client.options[:client_id].should == @options[:client_id]
-				@gocoin_client.options[:client_secret].should == @options[:client_secret]
+				@gocoin_client.options[:client_secret].should == @options[:client_secret]	
 				@gocoin_client.options[:host].should == @options[:host]
 				@gocoin_client.options[:port].should == @options[:port]
 				@gocoin_client.options[:path].should == @options[:path]
@@ -93,7 +96,6 @@ describe GoCoin::Client do
 				@gocoin_client.options[:grant_type].should == @options[:grant_type]
 				@gocoin_client.options[:request_id].should == @options[:request_id]
 				@gocoin_client.options[:dash_url].should == @options[:dash_url]
-				@gocoin_client.options[:log_file].should == @options[:log_file]
 			end
 
 		end
@@ -101,14 +103,6 @@ describe GoCoin::Client do
 		it "should interpret a 'false' (String type) options as a boolean false" do
 			@gocoin_client = GoCoin::Client.new( :secure => 'false')
 			@gocoin_client.options[:secure].should == false
-		end
-
-	end
-
-	describe '#authenticate' do
-
-		it 'should pass the options hash to Auth#authenticate' do
-			pending
 		end
 
 	end
