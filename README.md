@@ -128,8 +128,8 @@ created_invoice = gocoin_client.invoices.create( merchant_id,
   base_price_currency: "USD",
   confirmations_required: 6,
   notification_level: "all",
-  callback_url: "https://mattbeller.com/gocoin/callback",
-  redirect_url: "https://mattbeller.com/redirect"
+  callback_url: "https://myapp.com/gocoin/callback",
+  redirect_url: "https://myapp.com/redirect"
 )
 ```
 
