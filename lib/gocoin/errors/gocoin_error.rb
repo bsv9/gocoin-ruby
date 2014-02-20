@@ -1,5 +1,5 @@
-module GoCoin
-  class GoCoinError < StandardError
+module Gocoin
+  class GocoinError < StandardError
     attr_reader :message
     attr_reader :http_status
     attr_reader :http_body

@@ -1,19 +1,19 @@
-module GoCoin
+module Gocoin
   class API
 
     attr_reader :client, :user, :merchant, :invoices
 
   	def initialize(client)
   		@client = client
-  		@user = GoCoin::User.new(self)
-  		@merchant = GoCoin::Merchant.new(self)
-      @invoices = GoCoin::Invoices.new(self)
+  		@user = Gocoin::User.new(self)
+  		@merchant = Gocoin::Merchant.new(self)
+      @invoices = Gocoin::Invoices.new(self)
   	end
 
   	def request(route, options = {})
-  		@client.logger.debug 'GoCoin::API#request called.'
-  		raise 'GoCoin::API#request: Options is not a hash object' unless options.nil? || options.kind_of?(Hash)
-  		raise 'GoCoin::API#request: API not ready. Token was not defined' unless @client.token
+  		@client.logger.debug 'Gocoin::API#request called.'
+  		raise 'Gocoin::API#request: Options is not a hash object' unless options.nil? || options.kind_of?(Hash)
+  		raise 'Gocoin::API#request: API not ready. Token was not defined' unless @client.token
 
   		headers = options[:headers] ? @client.headers.merge(options[:headers]) : @client.headers.dup
   		headers['Authorization'] = "Bearer #{@client.token}"

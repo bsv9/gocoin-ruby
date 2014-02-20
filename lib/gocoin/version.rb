@@ -1,3 +1,3 @@
-module GoCoin
-  VERSION = '0.1.1'
+module Gocoin
+  VERSION = '0.1.2'
 end

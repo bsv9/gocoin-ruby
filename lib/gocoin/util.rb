@@ -1,4 +1,4 @@
-module GoCoin
+module Gocoin
   module Util
 
     class << self

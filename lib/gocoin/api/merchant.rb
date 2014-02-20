@@ -1,4 +1,4 @@
-module GoCoin
+module Gocoin
   class Merchant
 
 		def initialize(api)
@@ -6,14 +6,14 @@ module GoCoin
 		end
 
 		def get(id)
-			@api.client.logger.debug 'GoCoin::Merchant#delete called.'
+			@api.client.logger.debug 'Gocoin::Merchant#get called.'
 			route = "/merchants/#{id}"
 			options = {}
 			@api.request route, options
 		end
 
 		def update(id, params)
-			@api.client.logger.debug 'GoCoin::Merchant#update called.'
+			@api.client.logger.debug 'Gocoin::Merchant#update called.'
 			route = "/merchants/#{id}"
 			options = {
 				method: 'PATCH',

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe GoCoin::User do
+describe Gocoin::User do
 	
 	before :each do
 		# Values for GET /user API behavior (#self)
@@ -42,8 +42,8 @@ describe GoCoin::User do
 		}
 		@update_password_api_return_hash = 'mock_update_password_api_return_hash'
 
-		@user = GoCoin::User.new(@api = double(GoCoin::API))
-		@api.stub(:client).and_return(GoCoin::Client.new)
+		@user = Gocoin::User.new(@api = double(Gocoin::API))
+		@api.stub(:client).and_return(Gocoin::Client.new)
 
 		@api.stub(:request).and_return('Incorrect parameters provided to API#request')
 		@api.stub(:request).with(@self_route, @self_options).and_return(@self_api_return_hash)

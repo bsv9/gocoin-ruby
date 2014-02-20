@@ -1,4 +1,4 @@
-module GoCoin
-  class AuthenticationError < GoCoinError
+module Gocoin
+  class AuthenticationError < GocoinError
   end
 end

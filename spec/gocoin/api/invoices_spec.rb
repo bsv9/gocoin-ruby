@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe GoCoin::Invoices do
+describe Gocoin::Invoices do
 	
 	before :each do
 
@@ -10,7 +10,7 @@ describe GoCoin::Invoices do
 		@get_options = {}
 		@get_api_return_hash = 'mock_get_api_return_hash'
 
-		# Values for POST /merchant/:id/invoices API behavior (#create)
+		# Values for POST /merchants/:id/invoices API behavior (#create)
 		@merchant_id = 'somemerchantid'
 		@create_params = {
 		  price_currency: "BTC"
@@ -28,11 +28,11 @@ describe GoCoin::Invoices do
 			status: 'new',
 			page: 2
 		}
-		@search_route = "/invoices/search?#{GoCoin::Util.hash_to_url_params(@search_options)}"
+		@search_route = "/invoices/search?#{Gocoin::Util.hash_to_url_params(@search_options)}"
 		@search_api_return_hash = 'mock_search_api_return_hash'
 
-		@invoices = GoCoin::Invoices.new(@api = double(GoCoin::API))
-		@api.stub(:client).and_return(GoCoin::Client.new)
+		@invoices = Gocoin::Invoices.new(@api = double(Gocoin::API))
+		@api.stub(:client).and_return(Gocoin::Client.new)
 
 		@api.stub(:request).and_return('Incorrect parameters provided to API#request')
 		@api.stub(:request).with(@get_route, @get_options).and_return(@get_api_return_hash)

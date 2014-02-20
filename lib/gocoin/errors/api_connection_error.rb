@@ -1,4 +1,4 @@
-module GoCoin
-  class APIConnectionError < GoCoinError
+module Gocoin
+  class APIConnectionError < GocoinError
   end
 end

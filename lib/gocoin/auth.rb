@@ -1,4 +1,4 @@
-module GoCoin
+module Gocoin
   class Auth
 
     REQUIRED_CODE_PARAMS = %w[grant_type client_id client_secret code redirect_uri]
@@ -10,7 +10,7 @@ module GoCoin
     end
 
     def authenticate(options = {})
-      @client.logger.debug 'GoCoin::Auth#authenticate method called.'
+      @client.logger.debug 'Gocoin::Auth#authenticate method called.'
 
       headers = @client.headers.merge(options[:headers] || {})
       options = @client.options.merge options
@@ -37,12 +37,12 @@ module GoCoin
       if options[:grant_type] == 'authorization_code'
         required = REQUIRED_CODE_PARAMS
       else
-        raise 'GoCoin::Auth#authenticate: grant_type was not defined properly or is unsupported'
+        raise 'Gocoin::Auth#authenticate: grant_type was not defined properly or is unsupported'
       end      
 
       @client.logger.debug "Required params: #{required}"
       required.each do |required_attribute|
-        raise "GoCoin::Auth#authenticate requires '#{required_attribute}' option." unless options[required_attribute.to_sym]
+        raise "Gocoin::Auth#authenticate requires '#{required_attribute}' option." unless options[required_attribute.to_sym]
       end
       options
     end

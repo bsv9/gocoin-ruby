@@ -1,5 +1,5 @@
-module GoCoin
-  class InvalidRequestError < GoCoinError
+module Gocoin
+  class InvalidRequestError < GocoinError
     attr_accessor :param
 
     def initialize(message, http_status=nil, http_body=nil, json_body=nil)

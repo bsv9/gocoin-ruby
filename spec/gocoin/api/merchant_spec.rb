@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe GoCoin::Merchant do
+describe Gocoin::Merchant do
 	
 	before :each do
 		# Values for GET /merchants/:id API behavior (#get)
@@ -23,8 +23,8 @@ describe GoCoin::Merchant do
 		}
 		@update_api_return_hash = 'mock_update_api_return_hash'
 
-		@merchant = GoCoin::Merchant.new(@api = double(GoCoin::API))
-		@api.stub(:client).and_return(GoCoin::Client.new)
+		@merchant = Gocoin::Merchant.new(@api = double(Gocoin::API))
+		@api.stub(:client).and_return(Gocoin::Client.new)
 
 		@api.stub(:request).and_return('Incorrect parameters provided to API#request')
 		@api.stub(:request).with(@get_route, @get_options).and_return(@get_api_return_hash)

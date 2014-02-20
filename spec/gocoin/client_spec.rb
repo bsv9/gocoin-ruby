@@ -1,13 +1,13 @@
 require 'spec_helper'
 
-describe GoCoin::Client do
+describe Gocoin::Client do
 	
 	describe "::initialize" do
 
 		describe "with an empty options hash" do
 
 			before :each do
-				@gocoin_client = GoCoin::Client.new
+				@gocoin_client = Gocoin::Client.new
 			end
 
 			it "should have the default options" do
@@ -22,6 +22,7 @@ describe GoCoin::Client do
 				@gocoin_client.options[:grant_type].should == 'authorization_code'
 				@gocoin_client.options[:request_id].should be_nil
 				@gocoin_client.options[:dash_url].should == 'dashboard.gocoin.com'
+				@gocoin_client.options[:xrate_url].should == 'x.g0cn.com'
 				@gocoin_client.options[:log_file].should be_nil
 			end
 
@@ -34,27 +35,27 @@ describe GoCoin::Client do
 			end
 
 			it "should allow access to 'auth'" do
-				@gocoin_client.auth.class.to_s.should == 'GoCoin::Auth'
+				@gocoin_client.auth.class.to_s.should == 'Gocoin::Auth'
 			end
 
 			it "should allow access to 'api'" do
-				@gocoin_client.api.class.to_s.should == 'GoCoin::API'
+				@gocoin_client.api.class.to_s.should == 'Gocoin::API'
 			end
 
 			it "should allow access to 'auth'" do
-				@gocoin_client.auth.class.to_s.should == 'GoCoin::Auth'
+				@gocoin_client.auth.class.to_s.should == 'Gocoin::Auth'
 			end
 
 			it "should allow access to 'user'" do
-				@gocoin_client.user.class.to_s.should == 'GoCoin::User'
+				@gocoin_client.user.class.to_s.should == 'Gocoin::User'
 			end
 
 			it "should allow access to 'merchant'" do
-				@gocoin_client.merchant.class.to_s.should == 'GoCoin::Merchant'
+				@gocoin_client.merchant.class.to_s.should == 'Gocoin::Merchant'
 			end
 
 			it "should allow access to 'invoices'" do
-				@gocoin_client.invoices.class.to_s.should == 'GoCoin::Invoices'
+				@gocoin_client.invoices.class.to_s.should == 'Gocoin::Invoices'
 			end
 
 		end
@@ -76,7 +77,7 @@ describe GoCoin::Client do
 					request_id: 'a_request_id_string',
 					dash_url: 'a.different.dash.url',
 				}
-				@gocoin_client = GoCoin::Client.new(@options)
+				@gocoin_client = Gocoin::Client.new(@options)
 			end
 
 			it "should not be nil" do
@@ -101,7 +102,7 @@ describe GoCoin::Client do
 		end
 
 		it "should interpret a 'false' (String type) options as a boolean false" do
-			@gocoin_client = GoCoin::Client.new( :secure => 'false')
+			@gocoin_client = Gocoin::Client.new( :secure => 'false')
 			@gocoin_client.options[:secure].should == false
 		end
 
@@ -110,12 +111,12 @@ describe GoCoin::Client do
 	describe '#http_prefix' do
 
 		it "should return https when secure=ture" do
-			@gocoin_client = GoCoin::Client.new
+			@gocoin_client = Gocoin::Client.new
 			@gocoin_client.http_prefix.should == 'https://'
 		end
 
 		it "should return http when secure=false" do
-			@gocoin_client = GoCoin::Client.new
+			@gocoin_client = Gocoin::Client.new
 			@gocoin_client.http_prefix(false).should == 'http://'
 		end
 
@@ -124,12 +125,12 @@ describe GoCoin::Client do
 	describe '#port' do
 
 		it "should return a specified port (precded by a colon)" do
-			@gocoin_client = GoCoin::Client.new( :port => 628 )
+			@gocoin_client = Gocoin::Client.new( :port => 628 )
 			@gocoin_client.port.should == ':628'
 		end
 
 		it "should return nil when port unspecified" do
-			@gocoin_client = GoCoin::Client.new()
+			@gocoin_client = Gocoin::Client.new()
 			@gocoin_client.port.should be_nil
 		end
 

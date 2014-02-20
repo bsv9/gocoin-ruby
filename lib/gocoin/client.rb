@@ -1,4 +1,4 @@
-module GoCoin
+module Gocoin
 	class Client
 
 		attr_reader :api, :auth, :user, :merchant, :invoices, :apps, :headers, :options, :logger
@@ -18,6 +18,7 @@ module GoCoin
 				grant_type: 'authorization_code',
 				request_id: nil,
 				dash_url: 'dashboard.gocoin.com',
+				xrate_url: 'x.g0cn.com',
 				log_file: nil
 			}
 
@@ -30,8 +31,9 @@ module GoCoin
 			@headers = @options[:headers] || @default_headers
 			@headers['X-Request-Id'] = @options[:request_id] if @options[:request_id]
 
-			@auth = GoCoin::Auth.new(self)
-			@api = GoCoin::API.new(self)
+			@auth = Gocoin::Auth.new(self)
+			@api = Gocoin::API.new(self)
+			@xrate = Gocoin::Xrate.new(self)
 			@user = @api.user
 			@merchant = @api.merchant
 			@invoices = @api.invoices
@@ -40,7 +42,7 @@ module GoCoin
 		end
 
 		def authenticate(options)
-			@logger.debug 'GoCoin::Client#authenticate method called.'
+			@logger.debug 'Gocoin::Client#authenticate method called.'
 			@auth.authenticate options
 		end
 
@@ -124,8 +126,8 @@ module GoCoin
 			begin
 				error_obj = JSON.parse rbody
 				error_obj = Util.symbolize_names(error_obj)
-				error = error_obj[:error_description] or raise GoCoinError.new
-			rescue JSON::ParserError, GoCoinError
+				error = error_obj[:error_description] or raise GocoinError.new
+			rescue JSON::ParserError, GocoinError
 				raise general_api_error(rcode, rbody)
 			end
 
