@@ -17,9 +17,8 @@ spec = Gem::Specification.new do |s|
   s.add_development_dependency( 'rake', '~> 10.0' )
   s.add_development_dependency( 'rspec', '~> 2.14' )
   
-  s.files = `git ls-files`.split("\n")
-  s.test_files    = `git ls-files -- test/*`.split("\n")
-  s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
+  s.files         = Dir.glob("lib/**/*") + %w(LICENSE README.md VERSION history.md Gemfile Rakefile)
+  s.test_files    = Dir.glob("spec/**/*")
   s.require_paths = ['lib']
 
 end
