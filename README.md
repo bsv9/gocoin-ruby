@@ -17,10 +17,10 @@ require 'gocoin'
 
 ##Usage
 
-#### Instantiate a GoCoin client
+#### Instantiate a Gocoin client
 
 ``` ruby
-gocoin_client = GoCoin::Client.new(
+gocoin_client = Gocoin::Client.new(
 	client_id: '<CLIENT ID>',
 	client_secret: '<CLIENT SECRET>',
 	redirect_uri: 'https://myapp.com'
@@ -53,18 +53,18 @@ Note that token[:access_token] should be stored in your app if you wish to avoid
 #### Retrieve user data from the API.
 
 ``` ruby
-# GoCoin::User#self()
+# Gocoin::User#self()
 # Require user_read or user_read_write privilege
 user_self = gocoin_client.user.self
 
-# GoCoin::User#get(id)
+# Gocoin::User#get(id)
 same_user = gocoin_client.user.get(user_self[:id])
 ```
 
 #### Update user data.
 
 ``` ruby
-# GoCoin::User#update(id, params = {})
+# Gocoin::User#update(id, params = {})
 # Requires user_read_write grant_type
 gocoin_client.user.update( user_self[:id],
 	email: 'updated@emailaddress.com',
@@ -76,7 +76,7 @@ gocoin_client.user.update( user_self[:id],
 #### Update the user's password
 
 ``` ruby
-# GoCoin::User#update_password(id, params = {})
+# Gocoin::User#update_password(id, params = {})
 # Requires user_password_write permission
 gocoin_client.user.update_password(
 	user_self[:id],
@@ -91,7 +91,7 @@ gocoin_client.user.update_password(
 ``` ruby
 merchant_id = user_self[:merchant_id]
 
-# GoCoin::Merchant#get(id)
+# Gocoin::Merchant#get(id)
 # Requires merchants_read or merchant_read_write privilege
 merchant_self = gocoin_client.merchant.get(merchant_id))
 ```
@@ -99,7 +99,7 @@ merchant_self = gocoin_client.merchant.get(merchant_id))
 #### Update your merchant data
 
 ``` ruby
-# GoCoin::Merchant#update(id, params = {})
+# Gocoin::Merchant#update(id, params = {})
 # Requires merchant_read_write privilege
 gocoin_client.merchant.update( merchant_id,
   name: "Blingin' Merchant", 
@@ -120,7 +120,7 @@ gocoin_client.merchant.update( merchant_id,
 #### Create an invoice
 
 ``` ruby
-# GoCoin::Invoices#create(id, params = {})
+# Gocoin::Invoices#create(id, params = {})
 # Requires invoice_read_write privilege
 created_invoice = gocoin_client.invoices.create( merchant_id,
   price_currency: "BTC",
@@ -136,10 +136,10 @@ created_invoice = gocoin_client.invoices.create( merchant_id,
 #### Retrieve invoices from the API
 
 ``` ruby
-# GoCoin::Invoices#get(id)
+# Gocoin::Invoices#get(id)
 retrieved_invoice = gocoin_client.invoices.get(created_invoice[:id]
 
-# GoCoin::Invoices#search(params = {})
+# Gocoin::Invoices#search(params = {})
 searched_invoices = gocoin_client.invoices.search(
 	merchant_id: merchant_id,
 	status: 'new',
