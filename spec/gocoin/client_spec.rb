@@ -21,8 +21,8 @@ describe Gocoin::Client do
 				@gocoin_client.options[:method].should == 'GET'
 				@gocoin_client.options[:grant_type].should == 'authorization_code'
 				@gocoin_client.options[:request_id].should be_nil
-				@gocoin_client.options[:dash_url].should == 'dashboard.gocoin.com'
-				@gocoin_client.options[:xrate_url].should == 'x.g0cn.com'
+				@gocoin_client.options[:dashboard_host].should == 'dashboard.gocoin.com'
+				@gocoin_client.options[:xrate_host].should == 'x.g0cn.com'
 				@gocoin_client.options[:log_file].should be_nil
 			end
 
@@ -75,7 +75,7 @@ describe Gocoin::Client do
 					headers: {'Content-Length' => '628'},
 					grant_type: 'a_different_grant_type',
 					request_id: 'a_request_id_string',
-					dash_url: 'a.different.dash.url',
+					dashboard_host: 'a.different.dash.host',
 				}
 				@gocoin_client = Gocoin::Client.new(@options)
 			end
@@ -96,7 +96,7 @@ describe Gocoin::Client do
 				@gocoin_client.options[:headers].should == @options[:headers].merge('X-Request-Id' => 'a_request_id_string')
 				@gocoin_client.options[:grant_type].should == @options[:grant_type]
 				@gocoin_client.options[:request_id].should == @options[:request_id]
-				@gocoin_client.options[:dash_url].should == @options[:dash_url]
+				@gocoin_client.options[:dashboard_host].should == @options[:dashboard_host]
 			end
 
 		end
