@@ -1,7 +1,7 @@
 module Gocoin
 	class Client
 
-		attr_reader :api, :auth, :xrate, :user, :merchant, :invoices, :apps, :headers, :options, :logger
+		attr_reader :api, :auth, :xrate, :user, :merchant, :accounts, :invoices, :apps, :headers, :options, :logger
 		attr_accessor :token
 
 		def initialize(options = {})

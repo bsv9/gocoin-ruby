@@ -27,5 +27,12 @@ module Gocoin
 			@api.request route, options
 		end
 
+		def accounts(id)
+			@api.client.logger.debug 'Gocoin::Merchant#accounts called.'
+			route = "/merchants/#{id}/accounts"
+			options = {}
+			@api.request route, options
+		end
+
 	end
 end
