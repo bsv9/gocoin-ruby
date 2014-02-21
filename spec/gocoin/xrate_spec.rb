@@ -10,7 +10,7 @@ describe Gocoin::Xrate do
 		@get_raw_request_config = {
       url: "https://#{@host}#{@route}",
       method: 'GET',
-      headers: { client: 'fake_header_hash'},
+      headers: {},
       options: {}
 		}
 		@get_api_return_hash = 'mock_get_api_return_hash'
@@ -18,7 +18,7 @@ describe Gocoin::Xrate do
 		@xrate = Gocoin::Xrate.new(@client = double(Gocoin::Client))
 
 		@client.stub(:logger).and_return(Logger.new(STDOUT))
-		@client.stub(:headers).and_return({ client: 'fake_header_hash' })
+		@client.stub(:headers).and_return({ client: 'fake_header_hash_that_wont_be_used' })
 		@client.stub(:options).and_return({ xrate_host: @host })
 
 
