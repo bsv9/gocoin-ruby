@@ -1,13 +1,14 @@
 module Gocoin
   class API
 
-    attr_reader :client, :user, :merchant, :invoices
+    attr_reader :client, :user, :merchant, :invoices, :accounts
 
   	def initialize(client)
   		@client = client
-  		@user = Gocoin::User.new(self)
-  		@merchant = Gocoin::Merchant.new(self)
+      @accounts = Gocoin::Accounts.new(self)
       @invoices = Gocoin::Invoices.new(self)
+      @merchant = Gocoin::Merchant.new(self)
+      @user = Gocoin::User.new(self)
   	end
 
   	def request(route, options = {})

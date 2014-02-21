@@ -28,7 +28,7 @@ module Gocoin
     end
 
     def construct_code_url(params)
-      "https://#{@client.options[:dash_url]}/auth?#{Util.hash_to_url_params(params)}"
+      "https://#{@client.options[:dashboard_host]}/auth?#{Util.hash_to_url_params(params)}"
     end
 
     private

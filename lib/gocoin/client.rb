@@ -1,7 +1,7 @@
 module Gocoin
 	class Client
 
-		attr_reader :api, :auth, :user, :merchant, :invoices, :apps, :headers, :options, :logger
+		attr_reader :api, :auth, :xrate, :user, :merchant, :invoices, :apps, :headers, :options, :logger
 		attr_accessor :token
 
 		def initialize(options = {})
@@ -17,8 +17,8 @@ module Gocoin
 				headers: nil,
 				grant_type: 'authorization_code',
 				request_id: nil,
-				dash_url: 'dashboard.gocoin.com',
-				xrate_url: 'x.g0cn.com',
+				dashboard_host: 'dashboard.gocoin.com',
+				xrate_host: 'x.g0cn.com',
 				log_file: nil
 			}
 
@@ -34,9 +34,11 @@ module Gocoin
 			@auth = Gocoin::Auth.new(self)
 			@api = Gocoin::API.new(self)
 			@xrate = Gocoin::Xrate.new(self)
-			@user = @api.user
-			@merchant = @api.merchant
+
+			@accounts = @api.accounts
 			@invoices = @api.invoices
+			@merchant = @api.merchant
+			@user = @api.user
 
 			@options[:secure] = false if @options[:secure] == 'false'
 		end
@@ -63,6 +65,7 @@ module Gocoin
 			log_config[:headers] = config[:headers].dup
 			@logger.debug 'Raw request made' + strip_secure_from_raw(log_config).to_s
 
+			error_response = nil
 			begin
 				response = RestClient::Request.execute(
 					config.merge(
@@ -70,25 +73,26 @@ module Gocoin
 						timeout: 80
 					)
 				)
-			rescue SocketError => e
-				handle_restclient_error e
-			rescue NoMethodError => e
-				if e.message =~ /\WRequestFailed\W/
-					e = APIConnectionError.new('Unexpected HTTP response code')
-					handle_restclient_error e
+			rescue SocketError => error_response
+				handle_restclient_error error_response
+			rescue NoMethodError => error_response
+				if error_response.message =~ /\WRequestFailed\W/
+					error_response = APIConnectionError.new('Unexpected HTTP response code')
+					handle_restclient_error error_response
 				else
 					raise
 				end
-			rescue RestClient::ExceptionWithResponse => e
-				if rcode = e.http_code and rbody = e.http_body
+			rescue RestClient::ExceptionWithResponse => error_response
+				if rcode = error_response.http_code and rbody = error_response.http_body
 					handle_api_error rcode, rbody
 				else
-					handle_restclient_error e
+					handle_restclient_error error_response
 				end
-			rescue RestClient::Exception, Errno::ECONNREFUSED => e
-				handle_restclient_error e
+			rescue RestClient::Exception, Errno::ECONNREFUSED => error_response
+				handle_restclient_error error_response
 			end
 
+			return parse_error(error_response) if error_response
 			parse response
 		end
 
@@ -117,6 +121,18 @@ module Gocoin
 			Util.symbolize_names response
 		end
 
+		def parse_error(error_response)
+			begin
+				response = JSON.parse error_response.http_body
+			rescue JSON::ParserError
+				raise general_api_error error_response.http_code, error_response.error_body
+			end
+
+			response[:status] = error_response.http_code
+
+			Util.symbolize_names response
+		end
+
 		def general_api_error(rcode, rbody)
 			APIError.new( "Invalid response object from API: #{rbody.inspect} " +
 										"(HTTP response code was #{rcode}", rcode, rbody)
@@ -126,7 +142,7 @@ module Gocoin
 			begin
 				error_obj = JSON.parse rbody
 				error_obj = Util.symbolize_names(error_obj)
-				error = error_obj[:error_description] or raise GocoinError.new
+				error = error_obj[:error_description] or error_obj[:errors] or raise GocoinError.new
 			rescue JSON::ParserError, GocoinError
 				raise general_api_error(rcode, rbody)
 			end
@@ -136,6 +152,8 @@ module Gocoin
 				raise invalid_request_error error, rcode, rbody, error_obj
 			when 401
 				raise authentication_error error, rcode, rbody, error_obj
+			when 422 # Don't raise an error. Pass back a JSON object
+				return
 			else
 				raise api_error error, rcode, rbody, error_obj
 			end

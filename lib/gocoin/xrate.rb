@@ -10,15 +10,12 @@ module Gocoin
     def get(options = {})
       @client.logger.debug 'Gocoin::Xrate#get method called.'
 
-      headers = @client.headers.merge(options[:headers] || {})
       options = @client.options.merge options
       route = '/prices'
 
       config = {
         url: "https://#{@client.options[:xrate_host]}#{route}",
-        method: 'GET',
-        headers: headers,
-        payload: options.to_json
+        method: 'GET'
       }
 
       @client.raw_request config
