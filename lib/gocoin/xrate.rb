@@ -17,7 +17,7 @@ module Gocoin
       config = {
         url: "https://#{@client.options[:xrate_host]}#{route}",
         method: 'GET',
-        headers: headers,
+        headers: {},
         options: {}
       }
 
