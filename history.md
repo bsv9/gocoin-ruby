@@ -5,14 +5,17 @@ Initial release: <br>
 Selected methods for User, Merchant, and Invoices
 
 ###### v0.1.2:
+Decapitalized all instances of gocoin (except class name Gocoin). <br>
+This includes the gem name itself
+
 Added methods:
-* Accounts#transactions
-* Merchants::Currencies#get
-* Merchants::Currencies#list
-* Merchants::Currencies#update
-* Merchants::CurrencyConversions#get
-* Merchants::CurrencyConversions#list
-* Merchants::CurrencyConversions#request
-* Merchants::Payouts#get
-* Merchants::Payouts#list
-* Merchants::Payouts#request
+* client.accounts.transactions
+* client.merchant.currencies.get
+* client.merchant.currencies.list
+* client.merchant.currencies.update
+* client.merchant.currency_conversions.get
+* client.merchant.currency_conversions.list
+* client.merchant.currency_conversions.request
+* client.merchant.payouts.get
+* client.merchant.payouts.list
+* client.merchant.payouts.request
