@@ -228,7 +228,7 @@ currency_detail = gocoin_client.merchant.currencies.get( merchant_id, 'BTC' )
 ``` ruby
 # Gocoin::Merchant::Currencies#list(merchant_id)
 # Requires merchant_read or merchant_read_write privilege
-existing_currency_conversions = gocoin_client.merchant.currency_conversions.list( merchant_id )
+all_currency_details = gocoin_client.merchant.currency_conversions.list( merchant_id )
 ```
 
 #### Update your crypto/fiat split for a currency
