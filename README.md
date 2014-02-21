@@ -117,6 +117,22 @@ gocoin_client.merchant.update( merchant_id,
 )
 ```
 
+#### Get info on your accounts payable
+
+``` ruby
+# Gocoin::Merchant#accounts(merchant_id)
+# Requires merchant_read or merchant_read_write privilege
+gocoin_client.merchant.accounts( merchant_id )
+```
+
+#### Get a list of transactions on an account payable
+
+``` ruby
+# Gocoin::Accounts#transactions(account_id, params = {})
+# Requires account_read privilege
+gocoin_client.accounts.transactions( account_id )
+```
+
 #### Create an invoice
 
 ``` ruby
@@ -147,5 +163,80 @@ searched_invoices = gocoin_client.invoices.search(
 	end_time: '2013-12-31',
 	page: 1,
 	per_page: 20
+)
+```
+
+#### Request a payout
+
+``` ruby
+# Gocoin::Merchant::Payouts#request(merchant_id, params)
+# Requires merchant_read_write privilege
+requested_payout = gocoin_client.merchant.payouts.request( merchant_id,
+  currency_code: "BTC",
+  amount: 10
+)
+```
+
+#### Retrieve existing payout requests
+
+``` ruby
+# Gocoin::Merchant::Payouts#get(merchant_id, payout_id)
+# Requires merchant_read_write privilege
+existing_payout = gocoin_client.merchant.payouts.get( merchant_id, payout_id )
+```
+
+``` ruby
+# Gocoin::Merchant::Payouts#list(merchant_id)
+# Requires merchant_read_write privilege
+existing_payouts = gocoin_client.merchant.payouts.list( merchant_id )
+```
+
+#### Request a currency conversion
+
+``` ruby
+# Gocoin::Merchant::CurrencyConversions#request(merchant_id, params)
+# Requires merchant_read_write privilege
+requested_currency_conversion = gocoin_client.merchant.currency_conversions.request( merchant_id,
+  base_currency: "BTC",
+  base_currency_amount: 10,
+  final_currency: "USD"
+)
+```
+
+#### Retrieve existing currency conversion requests
+
+``` ruby
+# Gocoin::Merchant::CurrencyConversions#get(merchant_id, currency_conversion_id)
+# Requires merchant_read_write privilege
+existing_currency_conversion = gocoin_client.merchant.currency_conversions.get( merchant_id, currency_conversion_id )
+```
+
+``` ruby
+# Gocoin::Merchant::CurrencyConversions#list(merchant_id)
+# Requires merchant_read_write privilege
+existing_currency_conversions = gocoin_client.merchant.currency_conversions.list( merchant_id )
+```
+
+#### Retrieve data on supported currencies
+
+``` ruby
+# Gocoin::Merchant::Currencies#get(merchant_id, currency_conversion_id)
+# Requires merchant_read or merchant_read_write privilege
+currency_detail = gocoin_client.merchant.currencies.get( merchant_id, 'BTC' )
+```
+
+``` ruby
+# Gocoin::Merchant::Currencies#list(merchant_id)
+# Requires merchant_read or merchant_read_write privilege
+existing_currency_conversions = gocoin_client.merchant.currency_conversions.list( merchant_id )
+```
+
+#### Update your crypto/fiat split for a currency
+
+``` ruby
+# Gocoin::Merchant::Currencies#update(merchant_id, currency_code, params)
+# Requires merchant_read_write privilege
+gocoin_client.merchant.currencies.update( merchant_id, 'BTC',
+  payment_crypto_split: 75
 )
 ```
