@@ -20,16 +20,6 @@ module Gocoin
 				@api.request route, options
 			end
 
-			def request(merchant_id, params)
-				@api.client.logger.debug 'Gocoin::Merchants::Payouts#request called.'
-				route = "/merchants/#{merchant_id}/payouts"
-				options = {
-					method: 'POST',
-					payload: params
-				}
-				@api.request route, options
-			end
-
 		end
 	end
 end

@@ -20,16 +20,6 @@ module Gocoin
 				@api.request route, options
 			end
 
-			def request(merchant_id, params)
-				@api.client.logger.debug 'Gocoin::Merchants::CurrencyConversion#request called.'
-				route = "/merchants/#{merchant_id}/currency_conversions"
-				options = {
-					method: 'POST',
-					payload: params
-				}
-				@api.request route, options
-			end
-
 		end
 	end
 end

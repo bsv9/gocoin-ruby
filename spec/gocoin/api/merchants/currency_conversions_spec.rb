@@ -44,14 +44,6 @@ describe Gocoin::Merchants::CurrencyConversions do
 
 	end
 
-	describe "'request' method" do
-
-    it 'should return the correct result' do
-    	@currency_conversions.request(@merchant_id, @request_params).should == @request_api_return_hash
-    end
-
-	end
-
 	describe "'list' method" do
 
     it 'should return the correct result' do

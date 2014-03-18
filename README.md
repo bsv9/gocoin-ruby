@@ -2,9 +2,6 @@
 
 A Ruby gem for the GoCoin API.
 
-#### NOTICE:
-This code is highly experimental. If you are interested in GoCoin, please contact kevin@gocoin.com
-
 ## Installation
 
 ``` ruby
@@ -39,18 +36,21 @@ gocoin_client.auth.construct_code_url(
 )
 ```
 
+You then need to either use an HTTP client to GET the URL returned by construct_code_url or paste it into your browser and manually copy the RETURNED_CODE in the redirect (see below).
+
 The redirect will return the code as a parameter in the URL. For example:
 https://myapp.com?code=RETURNED_CODE&state=state_token_you_provide 
+
 Call Client#authenticate with the code as a parameter to retrieve a persistent token with the requests grant permissions.
 
 ``` ruby
 token = gocoin_client.authenticate( code: CODE )
 gocoin_client.token = token[:access_token]
 ```
-Note that token[:access_token] should be stored in your app if you wish to avoid the authentication procedure each time the app is used.
+Note that token[:access_token] should be stored in your app if you wish to avoid the authentication procedure each time the app is used. Once you have a valid access token, you can make all of the following API calls.
 
 
-#### Retrieve user data from the API.
+#### Retrieve user data
 
 ``` ruby
 # Gocoin::User#self()
@@ -61,7 +61,7 @@ user_self = gocoin_client.user.self
 same_user = gocoin_client.user.get(user_self[:id])
 ```
 
-#### Update user data.
+#### Update user data
 
 ``` ruby
 # Gocoin::User#update(id, params = {})
@@ -149,7 +149,7 @@ created_invoice = gocoin_client.invoices.create( merchant_id,
 )
 ```
 
-#### Retrieve invoices from the API
+#### Retrieve invoices
 
 ``` ruby
 # Gocoin::Invoices#get(id)
@@ -166,18 +166,7 @@ searched_invoices = gocoin_client.invoices.search(
 )
 ```
 
-#### Request a payout
-
-``` ruby
-# Gocoin::Merchant::Payouts#request(merchant_id, params)
-# Requires merchant_read_write privilege
-requested_payout = gocoin_client.merchant.payouts.request( merchant_id,
-  currency_code: "BTC",
-  amount: 10
-)
-```
-
-#### Retrieve existing payout requests
+#### Retrieve existing payout details
 
 ``` ruby
 # Gocoin::Merchant::Payouts#get(merchant_id, payout_id)
@@ -191,19 +180,7 @@ existing_payout = gocoin_client.merchant.payouts.get( merchant_id, payout_id )
 existing_payouts = gocoin_client.merchant.payouts.list( merchant_id )
 ```
 
-#### Request a currency conversion
-
-``` ruby
-# Gocoin::Merchant::CurrencyConversions#request(merchant_id, params)
-# Requires merchant_read_write privilege
-requested_currency_conversion = gocoin_client.merchant.currency_conversions.request( merchant_id,
-  base_currency: "BTC",
-  base_currency_amount: 10,
-  final_currency: "USD"
-)
-```
-
-#### Retrieve existing currency conversion requests
+#### Retrieve existing currency conversion details
 
 ``` ruby
 # Gocoin::Merchant::CurrencyConversions#get(merchant_id, currency_conversion_id)

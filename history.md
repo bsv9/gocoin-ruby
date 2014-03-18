@@ -19,3 +19,10 @@ Added methods:
 * client.merchant.payouts.get
 * client.merchant.payouts.list
 * client.merchant.payouts.request
+
+###### v0.1.3:
+Enhanced README documentation. <br>
+
+Removed methods:
+* client.merchant.currency_conversions.request
+* client.merchant.payouts.request
