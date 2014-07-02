@@ -19,7 +19,8 @@ module Gocoin
 				request_id: nil,
 				dashboard_host: 'dashboard.gocoin.com',
 				xrate_host: 'x.g0cn.com',
-				log_file: nil
+				log_file: nil,
+				token: nil
 			}
 
 			@default_headers = {
@@ -30,6 +31,7 @@ module Gocoin
 			@logger = Logger.new(@options[:log_file] || STDOUT)
 			@headers = @options[:headers] || @default_headers
 			@headers['X-Request-Id'] = @options[:request_id] if @options[:request_id]
+			@token = @options[:token] if @options[:token]
 
 			@auth = Gocoin::Auth.new(self)
 			@api = Gocoin::API.new(self)
@@ -107,7 +109,7 @@ module Gocoin
 				end
 			end
 			obj[:headers]['Authorization'] = '<bearer>' if obj[:headers]['Authorization']
-			
+
 			obj
 		end
 

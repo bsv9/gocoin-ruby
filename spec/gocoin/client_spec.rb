@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Gocoin::Client do
-	
+
 	describe "::initialize" do
 
 		describe "with an empty options hash" do
@@ -24,6 +24,7 @@ describe Gocoin::Client do
 				@gocoin_client.options[:dashboard_host].should == 'dashboard.gocoin.com'
 				@gocoin_client.options[:xrate_host].should == 'x.g0cn.com'
 				@gocoin_client.options[:log_file].should be_nil
+				expect(@gocoin_client.token).to be_nil
 			end
 
 			it "should have the default headers" do
@@ -76,6 +77,7 @@ describe Gocoin::Client do
 					grant_type: 'a_different_grant_type',
 					request_id: 'a_request_id_string',
 					dashboard_host: 'a.different.dash.host',
+					token: 'a_token'
 				}
 				@gocoin_client = Gocoin::Client.new(@options)
 			end
@@ -86,7 +88,7 @@ describe Gocoin::Client do
 
 			it "should set the options with the provided values" do
 				@gocoin_client.options[:client_id].should == @options[:client_id]
-				@gocoin_client.options[:client_secret].should == @options[:client_secret]	
+				@gocoin_client.options[:client_secret].should == @options[:client_secret]
 				@gocoin_client.options[:host].should == @options[:host]
 				@gocoin_client.options[:port].should == @options[:port]
 				@gocoin_client.options[:path].should == @options[:path]
@@ -97,6 +99,7 @@ describe Gocoin::Client do
 				@gocoin_client.options[:grant_type].should == @options[:grant_type]
 				@gocoin_client.options[:request_id].should == @options[:request_id]
 				@gocoin_client.options[:dashboard_host].should == @options[:dashboard_host]
+				expect(@gocoin_client.token).to eq @options[:token]
 			end
 
 		end
