@@ -26,3 +26,7 @@ Enhanced README documentation. <br>
 Removed methods:
 * client.merchant.currency_conversions.request
 * client.merchant.payouts.request
+
+###### v0.1.4:
+Allow :token option on client instantiation. <br>
+

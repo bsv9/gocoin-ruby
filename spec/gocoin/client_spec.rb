@@ -24,7 +24,7 @@ describe Gocoin::Client do
 				@gocoin_client.options[:dashboard_host].should == 'dashboard.gocoin.com'
 				@gocoin_client.options[:xrate_host].should == 'x.g0cn.com'
 				@gocoin_client.options[:log_file].should be_nil
-				expect(@gocoin_client.token).to be_nil
+				@gocoin_client.options[:token].should be_nil
 			end
 
 			it "should have the default headers" do
@@ -99,7 +99,7 @@ describe Gocoin::Client do
 				@gocoin_client.options[:grant_type].should == @options[:grant_type]
 				@gocoin_client.options[:request_id].should == @options[:request_id]
 				@gocoin_client.options[:dashboard_host].should == @options[:dashboard_host]
-				expect(@gocoin_client.token).to eq @options[:token]
+				@gocoin_client.options[:token].should == @options[:token]
 			end
 
 		end
