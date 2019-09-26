@@ -12,7 +12,7 @@ spec = Gem::Specification.new do |s|
   s.email = ['kevin@gocoin.com']
   s.homepage = 'http://www.gocoin.com'
 
-  s.add_dependency('rest-client', '~> 1.4')
+  s.add_dependency('rest-client', '~> 2.0')
 
   s.add_development_dependency( 'rake', '~> 10.0' )
   s.add_development_dependency( 'rspec', '~> 2.14' )
